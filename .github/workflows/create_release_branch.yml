@@ -47,19 +47,32 @@ jobs:
         body: |
            Hi!
            This PR was created in response workflow running.
-    - name: Checkout develop
-      uses: actions/checkout@v2
+  createrelease1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
       with:
-        ref: release/v${{ github.event.inputs.versionName }}
-    - name: Create pull request into develop
+        ref: develop
+        fetch-depth: 0
+    - name: Initialize mandatory git config
+      run: |
+       git config user.name "GitHub Actions"
+       git config user.email noreply@github.com  
+    - name: Create release branch
+      run: git checkout -b release/v${{ github.event.inputs.versionName }}
+    
+    - name: Create pull request into main
       uses: peter-evans/create-pull-request@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: release/v${{ github.event.inputs.versionName }}
         base: develop
-        title: v${{ github.event.inputs.versionName }} into develop
+        title: v${{ github.event.inputs.versionName }} into main
         body: |
-         Hi!
-         This PR was created in response workflow running.      
+           Hi!
+           This PR was created in response workflow running.           
+         
            
    
