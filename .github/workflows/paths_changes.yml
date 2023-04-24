@@ -23,8 +23,10 @@ jobs:
    security-scan:
     name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
     needs: activate-workflow
-    runs-on: ubuntu-latest
-    steps:
-        - name: List all changed files
-          run: echo ${{ needs.activate-workflow.outputs.file_changes }} 
-    
+    strategy:
+        matrix:
+          version: ${{ fromJSON(needs.activate-workflow.outputs.file_changes) }}
+    uses: ./.github/workflows/security-workflow.yml
+    with:
+        stage: ${{ github.ref_name }}
+        resource: ${{ (matrix.version) }}  
