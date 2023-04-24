@@ -32,8 +32,8 @@ jobs:
       run: ls -la
     - name: Commit changes
       run: |
-        touch filename.txt
-        git add filename.txt
+        
+        git add .
         git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
         git push origin release/v${{ github.event.inputs.versionName }}
     - name: Create pull request into main
