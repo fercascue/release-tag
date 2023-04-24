@@ -56,8 +56,7 @@ jobs:
     - name: Check outputs
       if: ${{ steps.cprdev.outputs.pull-request-number }}
       run: |
-         echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-         echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"       
+         echo "Pull Request Number - ${{ steps.cprdev.outputs.pull-request-number }}"
     - name: Check out code
       uses: actions/checkout@v3
       with:
@@ -86,4 +85,3 @@ jobs:
       if: ${{ steps.cprmain.outputs.pull-request-number }}
       run: |
          echo "Pull Request Number - ${{ steps.cprmain.outputs.pull-request-number }}"
-         echo "Pull Request URL - ${{ steps.cprmain.outputs.pull-request-url }}
