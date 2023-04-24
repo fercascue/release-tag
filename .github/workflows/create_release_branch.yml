@@ -25,7 +25,9 @@ jobs:
     - name: Create release branch
       run: git checkout -b release/v${{ github.event.inputs.versionName }}
     - name: Script
-      run: git log --pretty="- %s" >> CHANGELOG.md
+      run: |
+         git log --pretty="- %s" > CHANGELOG.md
+         cat CHANGELOG.md
     - name: List
       run: ls -la
     - name: Commit changes
