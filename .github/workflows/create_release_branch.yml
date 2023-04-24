@@ -48,7 +48,9 @@ jobs:
            Hi!
            This PR was created in response workflow running.
     - name: Checkout develop
-      run: git checkout origin/develop 
+      uses: actions/checkout@v2
+      with:
+        ref: develop
     - name: Create pull request into develop
       uses: peter-evans/create-pull-request@v4
       with:
