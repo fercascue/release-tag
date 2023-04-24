@@ -50,7 +50,7 @@ jobs:
             hotfix-to-develop-pr
             automated pr
             customer-portal
-            v${{ github.event.inputs.name }}
+            hotfix-${{ github.event.inputs.name }}
         body: |
            Hi!
            This PR was created in response workflow running to hotfix.
@@ -73,13 +73,13 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: hotfix/${{ github.event.inputs.name }}
         base: main
-        title: v${{ github.event.inputs.name }} into main
+        title: hotfix-${{ github.event.inputs.name }} into develop
         labels: |
             main
             hotfix-to-develop-pr
             automated pr
             customer-portal
-            v${{ github.event.inputs.name }}
+            hotfix-${{ github.event.inputs.name }}
         body: |
            Hi!
            This PR was created in response workflow running to hotfix.      
