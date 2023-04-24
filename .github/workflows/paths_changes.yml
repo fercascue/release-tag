@@ -14,6 +14,6 @@ jobs:
         with:
           dir_names: true
           json: true
-          since_last_remote_commit: true
+          base_sha: ${{ github.base_ref }}
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
