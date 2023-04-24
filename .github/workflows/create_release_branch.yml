@@ -28,8 +28,7 @@ jobs:
       run: |
          git log --pretty="- %s" > CHANGELOG.md
          cat CHANGELOG.md
-    - name: List
-      run: ls -la
+   
     - name: Commit changes
       run: |
         touch filename.txt
@@ -46,4 +45,5 @@ jobs:
         body: |
            Hi!
            This PR was created in response workflow running.
+           
    
