@@ -29,12 +29,11 @@ jobs:
     - name: Create pull request into main
       uses: peter-evans/create-pull-request@v4
       with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       branch: release/v${{ github.event.inputs.versionName }}
-       base: main
-       title: v${{ github.event.inputs.versionName }} into main
-       body: |
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: release/v${{ github.event.inputs.versionName }}
+        base: main
+        title: v${{ github.event.inputs.versionName }} into main
+        body: |
            Hi!
            This PR was created in response workflow running.
-           I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.
    
