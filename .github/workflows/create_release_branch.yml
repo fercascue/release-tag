@@ -12,51 +12,19 @@ permissions:
     pull-requests: write     
               
 jobs:
-  createrelease:
+   updateAuthors:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Create pull request into develop
-      uses: peter-evans/create-pull-request@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: develop
-        base: main
-        title: into develop
-        body: |
-           Hi!
-           This PR was created in response workflow running.    
-    - name: Initialize mandatory git config
-      run: |
-       git config user.name "GitHub Actions"
-       git config user.email noreply@github.com  
-    - name: Create release branch
-      run: git checkout -b release/v${{ github.event.inputs.versionName }}
-    - name: Script
-      run: |
-         git log --pretty="- %s" > CHANGELOG.md
-         cat CHANGELOG.md
-   
-    - name: Commit changes
-      run: |
-        touch filename.txt
-        git add filename.txt
-        git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
-        git push origin release/v${{ github.event.inputs.versionName }}
-    - name: Create pull request into main
-      uses: peter-evans/create-pull-request@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: release/v${{ github.event.inputs.versionName }}
-        base: main
-        title: v${{ github.event.inputs.versionName }} into main
-        body: |
-           Hi!
-           This PR was created in response workflow running.
-   
-           
-   
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update AUTHORS
+        run: |
+          git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: update authors
+          title: Update AUTHORS
+          body: Credit new contributors by updating AUTHORS
+          branch: develop
