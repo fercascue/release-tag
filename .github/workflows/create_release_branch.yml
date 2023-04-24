@@ -55,8 +55,8 @@ jobs:
       uses: peter-evans/create-pull-request@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        branch: release/v${{ github.event.inputs.versionName }}
-        base: develop
+        branch: develop
+        base: release/v${{ github.event.inputs.versionName }}
         title: v${{ github.event.inputs.versionName }} into develop
         body: |
          Hi!
