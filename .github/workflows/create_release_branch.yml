@@ -19,9 +19,14 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
     - name: Script
-      run: git log --pretty="- %s" >> SomeFile.txt
+      run: git log --pretty="- %s" >> CHANGELOG.md
     - name: List
-      run: ls -la     
+      run: ls -la CHANGELOG.md
+    - name: Commit changes
+      run: |
+        git add app_versions.gradle
+        git add CHANGELOG.md
+        git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
     - name: Create release branch
       run: git checkout -b release/v${{ github.event.inputs.versionName }}
     - name: Initialize mandatory git config
