@@ -44,7 +44,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: hotfix/${{ github.event.inputs.name }}
         base: develop
-        title: v${{ github.event.inputs.name }} into develop
+        title: hotfix-${{ github.event.inputs.name }} into develop
         labels: |
             develop
             hotfix-to-develop-pr
@@ -71,7 +71,7 @@ jobs:
       id: cprmain
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        branch: release/v${{ github.event.inputs.name }}
+        branch: hotfix/${{ github.event.inputs.name }}
         base: main
         title: v${{ github.event.inputs.name }} into main
         labels: |
