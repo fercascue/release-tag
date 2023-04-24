@@ -39,14 +39,23 @@ jobs:
         git push origin release/v${{ github.event.inputs.versionName }}
     - name: Create pull request into develop
       uses: peter-evans/create-pull-request@v4
+      id: cprdev
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: release/v${{ github.event.inputs.versionName }}
         base: develop
         title: v${{ github.event.inputs.versionName }} into develop
+        labels: |
+            develop
+            automated pr
         body: |
            Hi!
            This PR was created in response workflow running to release.
+    - name: Check outputs
+      if: ${{ steps.cprdev.outputs.pull-request-number }}
+      run: |
+         echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+         echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"       
     - name: Check out code
       uses: actions/checkout@v3
       with:
@@ -57,12 +66,20 @@ jobs:
           git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
     - name: Create pull request into main
       uses: peter-evans/create-pull-request@v4
+      id: cprmain
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: release/v${{ github.event.inputs.versionName }}
         base: main
         title: v${{ github.event.inputs.versionName }} into main
+        labels: |
+            main
+            automated pr
         body: |
            Hi!
            This PR was created in response workflow running to release.      
-   
+    - name: Check outputs
+      if: ${{ steps.cprmain.outputs.pull-request-number }}
+      run: |
+         echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+         echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}
