@@ -47,6 +47,12 @@ jobs:
         body: |
            Hi!
            This PR was created in response workflow running.
+    - name: Commit changes
+      run: |
+        touch filename.txt
+        git add filename.txt
+        git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
+        git push origin develop       
     - name: Create pull request into develop
       uses: peter-evans/create-pull-request@v4
       with:
