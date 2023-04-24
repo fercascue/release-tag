@@ -18,6 +18,10 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+    - name: Script
+      run: git log --pretty="- %s" >> SomeFile.txt
+    - name: List
+      run: ls -la     
     - name: Create release branch
       run: git checkout -b release/v${{ github.event.inputs.versionName }}
     - name: Initialize mandatory git config
