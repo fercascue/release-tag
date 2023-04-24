@@ -17,7 +17,9 @@ jobs:
 
     steps:
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Initialize mandatory git config
       run: |
        git config user.name "GitHub Actions"
@@ -45,6 +47,8 @@ jobs:
         body: |
            Hi!
            This PR was created in response workflow running.
+    - name: Checkout develop
+      run: git checkout origin/develop 
     - name: Create pull request into develop
       uses: peter-evans/create-pull-request@v4
       with:
