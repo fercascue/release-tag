@@ -47,19 +47,6 @@ jobs:
         body: |
            Hi!
            This PR was created in response workflow running.
-    - name: Checkout develop
-      uses: actions/checkout@v2
-      with:
-        ref: release/v${{ github.event.inputs.versionName }}
-    - name: Create pull request into develop
-      uses: peter-evans/create-pull-request@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: release/v${{ github.event.inputs.versionName }}
-        base: develop
-        title: v${{ github.event.inputs.versionName }} into develop
-        body: |
-         Hi!
-         This PR was created in response workflow running.      
+    
            
    
