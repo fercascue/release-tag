@@ -48,6 +48,8 @@ jobs:
         labels: |
             develop
             automated pr
+            customer-portal
+            v${{ github.event.inputs.versionName }}
         body: |
            Hi!
            This PR was created in response workflow running to release.
@@ -75,11 +77,13 @@ jobs:
         labels: |
             main
             automated pr
+            customer-portal
+            v${{ github.event.inputs.versionName }}
         body: |
            Hi!
            This PR was created in response workflow running to release.      
     - name: Check outputs
       if: ${{ steps.cprmain.outputs.pull-request-number }}
       run: |
-         echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-         echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}
+         echo "Pull Request Number - ${{ steps.cprmain.outputs.pull-request-number }}"
+         echo "Pull Request URL - ${{ steps.cprmain.outputs.pull-request-url }}
