@@ -17,13 +17,17 @@ jobs:
           dir_names: true
           json: true
           base_sha: ${{ github.base_ref }}
+          json_raw_format: true
           files_ignore: .github
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
    security-scan:
     name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
     needs: activate-workflow
-    runs-on: ubuntu-latest
-    steps: 
-       - name: List all changed files
-         run: echo ${{ needs.activate-workflow.outputs.file_changes }}
+    strategy:
+        matrix:
+          version: ${{ fromJSON(needs.activate-workflow.outputs.file_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+        stage: ${{ github.ref_name }}
+        resource: ${{ (matrix.version) }}  
