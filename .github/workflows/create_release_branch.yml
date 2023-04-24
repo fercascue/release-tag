@@ -37,22 +37,22 @@ jobs:
         git add filename.txt
         git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
         git push origin release/v${{ github.event.inputs.versionName }}
-    - name: Create pull request into main
+    - name: Create pull request into develop
       uses: peter-evans/create-pull-request@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: release/v${{ github.event.inputs.versionName }}
         base: develop
-        title: v${{ github.event.inputs.versionName }} into main
+        title: v${{ github.event.inputs.versionName }} into develop
         body: |
            Hi!
-           This PR was created in response workflow running.
+           This PR was created in response workflow running to release.
     - name: Check out code
       uses: actions/checkout@v3
       with:
         fetch-depth: 0  
         ref: release/v${{ github.event.inputs.versionName }}
-    - name: Update AUTHORS
+    - name: Commit changes
       run: |
           git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
     - name: Create pull request into main
@@ -64,5 +64,5 @@ jobs:
         title: v${{ github.event.inputs.versionName }} into main
         body: |
            Hi!
-           This PR was created in response workflow running.      
+           This PR was created in response workflow running to release.      
    
