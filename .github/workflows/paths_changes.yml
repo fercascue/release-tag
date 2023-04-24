@@ -4,7 +4,7 @@ on:
       branches:
         - test
 jobs:
-   test-files:
+    activate-workflow:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3   
@@ -17,3 +17,14 @@ jobs:
           base_sha: ${{ github.base_ref }}
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+   security-scan:
+    name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
+    needs: activate-workflow
+    if: ${{ needs.activate-workflow.outputs.outputs.all_changed_files != '[]'}}
+    strategy:
+        matrix:
+         artifact: ${{ fromJSON(needs.activate-workflow.outputs.outputs.all_changed_files) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+        stage: ${{ github.ref_name }}
+        resource: ${{ (matrix.artifact) }}       
