@@ -20,6 +20,16 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Create pull request into develop
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: develop
+        base: main
+        title: into develop
+        body: |
+           Hi!
+           This PR was created in response workflow running.    
     - name: Initialize mandatory git config
       run: |
        git config user.name "GitHub Actions"
