@@ -24,7 +24,6 @@ jobs:
       run: ls -la CHANGELOG.md
     - name: Commit changes
       run: |
-        git add app_versions.gradle
         git add CHANGELOG.md
         git commit --message "Prepare release ${{ github.event.inputs.versionName }}"
     - name: Create release branch
