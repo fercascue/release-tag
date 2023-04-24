@@ -49,7 +49,7 @@ jobs:
            This PR was created in response workflow running.
   createrelease1:
     runs-on: ubuntu-latest
-
+    needs: createrelease
     steps:
     - name: Check out code
       uses: actions/checkout@v3
