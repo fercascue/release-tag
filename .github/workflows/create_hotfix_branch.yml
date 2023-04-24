@@ -73,7 +73,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: hotfix/${{ github.event.inputs.name }}
         base: main
-        title: hotfix-${{ github.event.inputs.name }} into develop
+        title: hotfix-${{ github.event.inputs.name }} into main
         labels: |
             main
             hotfix-to-develop-pr
