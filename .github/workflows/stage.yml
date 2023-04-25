@@ -5,7 +5,7 @@ on:
     branches:
       - test
       - main
-      - 'release*'
+      - 'release/**'
 
 jobs:
 # Do something
@@ -42,4 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - name: Print STAGE
-         run: echo ${{ needs.deploy.outputs.TARGET_ENV }}       
+         run: echo ${{ needs.deploy.outputs.TARGET_ENV }}
+  call-workflow-passing-data:
+    needs: deploy
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+        stage: ${{ needs.deploy.outputs.TARGET_ENV }}
+    secrets: inherit              

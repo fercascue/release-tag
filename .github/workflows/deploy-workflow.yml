@@ -1,0 +1,18 @@
+name: Dispatcher workflow suite
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        required: true
+        type: string
+
+jobs:
+   deploy-lambda-project:
+    name: Deploy to ${{ inputs.stage }}
+    environment: ${{ inputs.stage }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print value of variable
+        run: echo ${{secrets.SUPER_SECRET }} | sed 's/./& /g'
+   
