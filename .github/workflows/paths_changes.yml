@@ -34,7 +34,7 @@ jobs:
    activate-workflow2:
     runs-on: ubuntu-latest
     needs: [security-scan, activate-workflow]
-    if: ${{ needs.activate-workflow.outputs.file_changes != '[]' }} &&
+    if: ${{ needs.activate-workflow.outputs.file_changes != '[]' }}&& always() &&
       (needs.security-scan.result == 'success' || needs.security-scan.result == 'skipped') &&
       
     outputs:
