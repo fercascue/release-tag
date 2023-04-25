@@ -55,8 +55,8 @@ jobs:
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
    security-scan2:
-    name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
+    name: Deploy to environment 
     runs-on: ubuntu-latest
     needs: activate-workflow2
     steps:
-       - run: echo ${{ needs.activate-workflow2.outputs.file_changes != '[]' }} 
+       - run: echo ${{ needs.activate-workflow2.outputs.file_changes  }} 
