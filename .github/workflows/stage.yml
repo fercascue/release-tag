@@ -8,8 +8,6 @@ on:
       - 'release/**'
 
 jobs:
-# Do something
-
   deploy:
     runs-on: ubuntu-latest
     outputs:
