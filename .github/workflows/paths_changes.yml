@@ -32,7 +32,10 @@ jobs:
         resource: ${{ (matrix.version) }}  
    activate-workflow2:
     runs-on: ubuntu-latest
-    needs: security-scan
+    needs: [security-scan, activate-workflow]
+    if: always() &&
+      (needs.security-scan == 'success' || needs.security-scan.result == 'skipped') &&
+      (needs.activate-workflow == 'success' || needs.activate-workflow.result == 'skipped')
     outputs:
         file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
