@@ -47,7 +47,7 @@ jobs:
           json_raw_format: true
           files_ignore: |
                     .github
-                    '*layer*'
+                    *layer*
       - name: List all changed files
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
    security-scan2:
