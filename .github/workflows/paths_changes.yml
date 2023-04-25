@@ -22,6 +22,7 @@ jobs:
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
    security-scan:
     name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
+    if: ${{ needs.activate-workflow.outputs.file_changes != '[]' }}
     needs: activate-workflow
     strategy:
         matrix:
