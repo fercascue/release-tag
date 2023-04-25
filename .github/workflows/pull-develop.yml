@@ -5,45 +5,13 @@ on:
     types: ['opened', 'edited', 'reopened', 'synchronize']
     branches:
       - test
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
-# Do something
-
-  deploy:
-    runs-on: ubuntu-latest
-    outputs:
-        TARGET_ENV: ${{ steps.init.outputs.TARGET_ENV }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Print message
-        run: echo ${{ github.ref_name }}  
-      - name: "Check where to deploy"
-        id: init
-        run: |
-          if ${{ github.ref_name == 'test' }} 
-          then
-           echo "TARGET_ENV=develop" >> $GITHUB_OUTPUT 
-          fi
-          if ${{ github.ref_name == 'main' }}
-          then
-            echo "TARGET_ENV=production" >> $GITHUB_OUTPUT 
-          fi
-          
-          if ${{contains (github.ref_name,'release'  )}} 
-          then
-            echo "TARGET_ENV=stage" >> $GITHUB_OUTPUT 
-          fi
-        shell: bash 
-  call-workflow-passing-data:
-    needs: deploy
-    uses: ./.github/workflows/deploy-workflow.yml
-    with:
-        stage: ${{ needs.deploy.outputs.TARGET_ENV }}
-    secrets: inherit
   auto-approve:
       runs-on: ubuntu-latest
-      needs: call-workflow-passing-data
       permissions:
         pull-requests: write
       steps:
@@ -51,7 +19,7 @@ jobs:
           with:
             pull-request-number: ${{ github.event.pull_request.number }}
             review-message: "Auto approved automated PR"  
-  auto-merge:
+   auto-merge:
     runs-on: ubuntu-latest
     needs: auto-approve
     permissions:
