@@ -5,7 +5,7 @@ on:
     branches:
       - test
       - main
-      - 'release*'
+      - 'release/**'
 
 jobs:
 # Do something
