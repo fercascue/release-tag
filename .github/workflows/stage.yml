@@ -27,7 +27,7 @@ jobs:
         run: |
           if ${{ github.ref_name == 'test' }}
           then
-           echo "STAGE=TEST" >> $GITHUB_OUTPUT 
+           echo "TARGET_ENV=TEST" >> $GITHUB_OUTPUT 
           fi
         
         shell: bash 
