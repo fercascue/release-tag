@@ -7,16 +7,13 @@ on:
       - main
       - 'release*'
 
-env:
-   TARGET_ENV: UAT      
-
 jobs:
 # Do something
 
   deploy:
     runs-on: ubuntu-latest
     outputs:
-        STAGE: ${{ steps.init.outputs.stageEnv }}
+        TARGET_ENV: ${{ steps.init.outputs.TARGET_ENV }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -37,4 +34,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - name: Print STAGE
-         run: echo ${{ needs.deploy.outputs.STAGE }}       
+         run: echo ${{ needs.deploy.outputs.TARGET_ENV }}       
