@@ -34,9 +34,7 @@ jobs:
    activate-workflow2:
     runs-on: ubuntu-latest
     needs: security-scan
-    if: always() &&
-      (needs.security-scan.result == 'success' || needs.security-scan.result == 'skipped')
-      
+    if: always()       
     outputs:
         lambda_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
@@ -58,6 +56,6 @@ jobs:
     name: Deploy to environment 
     runs-on: ubuntu-latest
     needs: activate-workflow2
-    if: ${{ needs.activate-workflow2.outputs.lambda_changes != '[]' }}
+    if: ${{ needs.activate-workflow2.outputs.lambda_changes != '[]' }} 
     steps:
        - run: echo ${{ needs.activate-workflow2.outputs.lambda_changes  }} 
