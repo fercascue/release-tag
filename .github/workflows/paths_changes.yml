@@ -10,6 +10,10 @@ jobs:
         file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
     steps: 
       - uses: actions/checkout@v3   
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto ${{ github.event.pull_request.number }}
+        env:
+           GH_TOKEN: ${{ secrets.PAT }}
       - name: Run changed-files with dir_names
         id: changed-files-dir-names
         uses: tj-actions/changed-files@v35
@@ -31,3 +35,4 @@ jobs:
     with:
         stage: ${{ github.ref_name }}
         resource: ${{ (matrix.version) }}  
+  
