@@ -29,16 +29,7 @@ jobs:
           then
            echo "STAGE=TEST" >> $GITHUB_OUTPUT 
           fi
-          
-          if contains(${{ github.ref_name}}, 'release')
-          then
-           echo "STAGE=PRE" >> $GITHUB_OUTPUT 
-          fi
-          if ${{ github.ref_name == 'test' }}
-          then
-           echo "STAGE=TEST" >> $GITHUB_OUTPUT 
-          fi
-
+        
         shell: bash 
   check:
     name: Check stage
