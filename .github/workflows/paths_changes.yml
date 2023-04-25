@@ -30,4 +30,33 @@ jobs:
     with:
         stage: ${{ github.ref_name }}
         resource: ${{ (matrix.version) }}  
-  
+   activate-workflow2:
+    runs-on: ubuntu-latest
+    needs: security-scan
+    outputs:
+        file_changes: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+    steps: 
+      - uses: actions/checkout@v3   
+      - name: Run changed-files with dir_names
+        id: changed-files-dir-names
+        uses: tj-actions/changed-files@v35
+        with:
+          dir_names: true
+          json: true
+          base_sha: ${{ github.base_ref }}
+          json_raw_format: true
+          files_ignore: |
+                    .github
+                    '*layer*'
+      - name: List all changed files
+        run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+   security-scan2:
+    name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
+    needs: activate-workflow2
+    strategy:
+        matrix:
+          version: ${{ fromJSON(needs.activate-workflow2.outputs.file_changes) }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+        stage: ${{ github.ref_name }}
+        resource: ${{ (matrix.version) }}
