@@ -56,12 +56,12 @@ jobs:
         run: echo ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
    security-scan2:
     name: Deploy to environment ${{ github.ref_name }} && ${{ github.ref_name != 'develop' }}
-    needs: activate-workflow2
     if: ${{ needs.activate-workflow2.outputs.file_changes != '[]' }}
+    needs: activate-workflow2
     strategy:
         matrix:
           version: ${{ fromJSON(needs.activate-workflow2.outputs.file_changes) }}
     uses: ./.github/workflows/reusable-workflow.yml
     with:
         stage: ${{ github.ref_name }}
-        resource: ${{ (matrix.version) }}
+        resource: ${{ (matrix.version) }} 
