@@ -58,6 +58,6 @@ jobs:
     name: Deploy to environment 
     runs-on: ubuntu-latest
     needs: activate-workflow2
-    if: always()
+    if: always() && ${{ needs.activate-workflow2.outputs.lambda_changes != '[]' }}
     steps:
        - run: echo ${{ needs.activate-workflow2.outputs.lambda_changes  }} 
