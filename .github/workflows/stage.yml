@@ -22,9 +22,13 @@ jobs:
       - name: "Check where to deploy"
         id: init
         run: |
-          if ${{ github.ref_name == 'test' }}
+          if ${{ github.ref_name == 'test' }} 
           then
            echo "TARGET_ENV=TEST" >> $GITHUB_OUTPUT 
+          fi
+          if ${{ github.ref_name == 'main' }}
+          then
+           echo "TARGET_ENV=PRO" >> $GITHUB_OUTPUT 
           fi
         
         shell: bash 
