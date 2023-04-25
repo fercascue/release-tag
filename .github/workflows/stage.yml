@@ -15,4 +15,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Print message
-        run: echo ${{ github.ref }}  
+        run: echo ${{ github.ref_name }}  
