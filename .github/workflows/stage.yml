@@ -27,16 +27,16 @@ jobs:
         run: |
           if ${{ github.ref_name == 'test' }}
           then
-           echo "STAGE="TEST" >> $GITHUB_OUTPUT 
+           echo "STAGE=TEST" >> $GITHUB_OUTPUT 
           fi
           
           if contains(${{ github.ref_name}}, 'release')
           then
-           echo "STAGE="PRE" >> $GITHUB_OUTPUT 
+           echo "STAGE=PRE" >> $GITHUB_OUTPUT 
           fi
           if ${{ github.ref_name == 'test' }}
           then
-           echo "STAGE="TEST" >> $GITHUB_OUTPUT 
+           echo "STAGE=TEST" >> $GITHUB_OUTPUT 
           fi
 
         shell: bash 
