@@ -1,8 +1,6 @@
 name: File changes
 on:
-   pull_request:
-      branches:
-        - test
+   push:
 jobs:
    activate-workflow:
     runs-on: ubuntu-latest
