@@ -5,7 +5,7 @@ on:
     branches:
       - test
       - main
-      - "release*"
+      - 'release*'
 
 jobs:
 # Do something
@@ -30,7 +30,8 @@ jobs:
           then
             echo "TARGET_ENV=production" >> $GITHUB_OUTPUT 
           fi
-          if contains (${{ github.ref_name }},'release'  )
+          
+          if ${{contains (github.ref_name,'release'  )}} 
           then
             echo "TARGET_ENV=stage" >> $GITHUB_OUTPUT 
           fi
