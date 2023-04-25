@@ -4,15 +4,46 @@ on:
   push:
     branches:
       - test
+      - main
+      - 'release*'
+
+env:
+   TARGET_ENV: UAT      
 
 jobs:
-
 # Do something
 
   deploy:
     runs-on: ubuntu-latest
+    outputs:
+        STAGE: ${{ steps.init.outputs.stageEnv }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Print message
         run: echo ${{ github.ref_name }}  
+      - name: "Check where to deploy"
+        id: init
+        run: |
+          if ${{ github.ref_name == 'test' }}
+          then
+           echo "STAGE="TEST" >> $GITHUB_OUTPUT 
+          fi
+          
+          if contains(${{ github.ref_name}}, 'release')
+          then
+           echo "STAGE="PRE" >> $GITHUB_OUTPUT 
+          fi
+          if ${{ github.ref_name == 'test' }}
+          then
+           echo "STAGE="TEST" >> $GITHUB_OUTPUT 
+          fi
+
+        shell: bash 
+  check:
+    name: Check stage
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+       - name: Print STAGE
+         run: echo ${{ needs.deploy.outputs.STAGE }}       
