@@ -1,6 +1,8 @@
 name: File changes
 on:
    push:
+     branches:
+       - main
 jobs:
    activate-workflow:
     runs-on: ubuntu-latest
