@@ -12,14 +12,23 @@ permissions:
 jobs:
   createrelease:
     runs-on: ubuntu-latest
-
+    outputs:
+      TARGET_TAG: ${{ steps.init.outputs.TARGET_TAG }}
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Get last tag
-      run: |
-        echo git describe
-         
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get last tag
+        id: init
+        run: |
+          echo "TARGET_TAG=echo git describe" >> $GITHUB_OUTPUT
+  check-tag:
+    runs-on: ubuntu-latest
+    needs: createrelease
+    steps:
+      - name: Print tag
+        id: init
+        run: echo ${{ needs.createrelease.outputs.TARGET_TAG }}
+             
     
