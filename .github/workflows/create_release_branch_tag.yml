@@ -22,7 +22,7 @@ jobs:
       - name: Get last tag
         id: init
         run: |
-          echo "TARGET_TAG=$(echo git describe)" >> $GITHUB_OUTPUT
+          echo "TARGET_TAG=$(git describe)" >> $GITHUB_OUTPUT
   check-tag:
     runs-on: ubuntu-latest
     needs: createrelease
